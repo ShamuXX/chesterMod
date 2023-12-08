@@ -1,0 +1,7 @@
+Java Launcher: C:\Program Files\Java\jdk-17\bin\java.exe
+Arguments: '--inJar, C:\Users\samue\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.19-41.1.0\forge-1.19-41.1.0-injected.jar, --outJar, C:\Users\samue\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.19-41.1.0_mapped_official_1.19\forge-1.19-41.1.0_mapped_official_1.19.jar, --logFile, accesstransform.log, --atFile, C:\Users\samue\OneDrive\Documentos\MinecraftModded\chester_mod_byshamu\build\_atJar_4\parent_at.cfg'
+Classpath:
+ - C:\Users\samue\.gradle\caches\forge_gradle\maven_downloader\net\minecraftforge\accesstransformers\8.0.7\accesstransformers-8.0.7-fatjar.jar
+Working directory: C:\Users\samue\OneDrive\Documentos\MinecraftModded\chester_mod_byshamu\build\_atJar_4
+Main class: net.minecraftforge.accesstransformer.TransformerProcessor
+====================================

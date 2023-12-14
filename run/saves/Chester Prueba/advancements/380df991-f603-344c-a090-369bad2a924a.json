@@ -1,0 +1,15 @@
+{
+  "minecraft:story/lava_bucket": {
+    "criteria": {
+      "lava_bucket": "2023-12-13 22:28:23 -0600"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:desert": "2023-12-13 21:53:02 -0600"
+    },
+    "done": false
+  },
+  "DataVersion": 3105
+}

@@ -15,24 +15,25 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A loader for custom {@linkplain TextureAtlasSprite texture atlas sprites}.
  * <p>
- * The loader can be specified in the corresponding .mcmeta file for a texture as follows:
+ * The loader can be specified in the corresponding .mcmeta file for a texture
+ * as follows:
+ * 
  * <pre>
  * {
  *   "forge": {
- *     "loader": "examplemod:example_tas_loader"
+ *     "loader": "chestermod:example_tas_loader"
  *   }
  * }
  * </pre>
  *
  * @see net.minecraftforge.client.event.RegisterTextureAtlasSpriteLoadersEvent
  */
-public interface ITextureAtlasSpriteLoader
-{
+public interface ITextureAtlasSpriteLoader {
     /**
      * Load a {@link TextureAtlasSprite} for the given resource.
      */
     @NotNull
     TextureAtlasSprite load(TextureAtlas atlas, ResourceManager resourceManager, TextureAtlasSprite.Info textureInfo,
-                            Resource resource, int atlasWidth, int atlasHeight, int spriteX, int spriteY,
-                            int mipmapLevel, NativeImage image);
+            Resource resource, int atlasWidth, int atlasHeight, int spriteX, int spriteY,
+            int mipmapLevel, NativeImage image);
 }

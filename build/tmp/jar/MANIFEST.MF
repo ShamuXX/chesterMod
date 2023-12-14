@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Specification-Title: chestermod
+Specification-Vendor: chestermodsareus
+Specification-Version: 1
+Implementation-Title: chester_mod_byshamu
+Implementation-Version: 1.0
+Implementation-Vendor: chestermodsareus
+Implementation-Timestamp: 2023-12-09T14:07:03-0600
+

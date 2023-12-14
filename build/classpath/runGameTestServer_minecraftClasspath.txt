@@ -1,4 +1,4 @@
-C:\Users\samue\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.19-41.1.0_mapped_official_1.19\forge-1.19-41.1.0_mapped_official_1.19.jar
+C:\Users\samue\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.19-41.1.0_mapped_official_1.19\forge-1.19-41.1.0_mapped_official_1.19-recomp.jar
 C:\Users\samue\.gradle\caches\forge_gradle\minecraft_repo\versions\1.19\client-extra.jar
 C:\Users\samue\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.19-41.1.0\be32fef2bf3091b53308e5a1b1930169dd34136c\javafmllanguage-1.19-41.1.0.jar
 C:\Users\samue\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.19-41.1.0\887bff594c934cc4088c9c867db193b8537ee1f6\lowcodelanguage-1.19-41.1.0.jar

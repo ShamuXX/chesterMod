@@ -7,9 +7,11 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -29,6 +31,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
 import java.util.UUID;;
@@ -37,6 +40,7 @@ public class ChesterEntity extends AbstractChestedHorse {
   private static final EntityDataAccessor<Boolean> DATA_ID_CHEST = SynchedEntityData
       .defineId(ChesterEntity.class, EntityDataSerializers.BOOLEAN);
   public static final int INV_CHEST_COUNT = 15;
+  private static final double TELEPORT_DISTANCE = 16.0;
 
   private boolean tamed = false;
 
@@ -69,24 +73,46 @@ public class ChesterEntity extends AbstractChestedHorse {
   public void tick() {
     super.tick();
 
-    // Llama al método de seguimiento personalizado
     followOwner();
+
+    UUID ownerUUID = this.getOwnerUUID();
+    if (this.isTamed() && ownerUUID != null) {
+      Player owner = this.level.getPlayerByUUID(ownerUUID);
+      if (owner != null) {
+        double distance = this.distanceTo(owner);
+        if (distance > TELEPORT_DISTANCE) {
+          teleportToOwner();
+        }
+      }
+    }
+  }
+
+  private void teleportToOwner() {
+    UUID ownerUUID = this.getOwnerUUID();
+
+    if (ownerUUID != null && this.level instanceof ServerLevel) {
+      ServerLevel serverLevel = (ServerLevel) this.level;
+      Entity ownerEntity = serverLevel.getEntity(ownerUUID);
+
+      if (ownerEntity instanceof Player) {
+        Player owner = (Player) ownerEntity;
+        if (owner != null) {
+          Vec3 ownerPos = owner.position();
+          this.teleportTo(ownerPos.x(), ownerPos.y(), ownerPos.z());
+        }
+      }
+    }
   }
 
   private void followOwner() {
     UUID ownerUUID = this.getOwnerUUID();
 
     if (ownerUUID != null) {
-      double followSpeed = 1.0; // Ajusta la velocidad según sea necesario
-
-      // Obtiene el sistema de navegación
+      double followSpeed = 1.0;
       PathNavigation navigation = this.getNavigation();
-
-      // Obtiene la entidad del mundo a partir de la UUID del propietario
       LivingEntity owner = this.level.getPlayerByUUID(ownerUUID);
 
       if (owner != null) {
-        // Mueve la entidad hacia el dueño
         navigation.moveTo(owner, followSpeed);
       }
     }
@@ -220,7 +246,6 @@ public class ChesterEntity extends AbstractChestedHorse {
     this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
     this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
     this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-
   }
 
   @Override

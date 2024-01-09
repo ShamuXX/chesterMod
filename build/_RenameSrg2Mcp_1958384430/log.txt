@@ -1,0 +1,15 @@
+Java Launcher: C:\Program Files\Java\jdk-17\bin\java.exe
+Arguments: '--task, SRG_TO_MCP, --input, C:\Users\samue\.gradle\caches\modules-2\files-2.1\software.bernie.geckolib\geckolib-forge-1.19\3.1.19\b71e1b113851a1b77a9ab784ad00f1eb5862de7e\geckolib-forge-1.19-3.1.19.jar, --output, C:\Users\samue\.gradle\caches\forge_gradle\deobf_dependencies\software\bernie\geckolib\geckolib-forge-1.19\3.1.19_mapped_official_1.19\geckolib-forge-1.19-3.1.19_mapped_official_1.19.jar, --mcp, C:\Users\samue\.gradle\caches\forge_gradle\mcp_repo\net\minecraft\mapping\1.19\mapping-1.19-mapping.zip, --strip-signatures'
+Classpath:
+ - C:\Users\samue\.gradle\caches\forge_gradle\maven_downloader\net\minecraftforge\installertools\1.3.2\installertools-1.3.2-fatjar.jar
+Working directory: C:\Users\samue\Documents\chesterMod\build\_RenameSrg2Mcp_1958384430
+Main class: net.minecraftforge.installertools.ConsoleTool
+====================================
+Task: SRG_TO_MCP
+Input:  C:\Users\samue\.gradle\caches\modules-2\files-2.1\software.bernie.geckolib\geckolib-forge-1.19\3.1.19\b71e1b113851a1b77a9ab784ad00f1eb5862de7e\geckolib-forge-1.19-3.1.19.jar
+Output: C:\Users\samue\.gradle\caches\forge_gradle\deobf_dependencies\software\bernie\geckolib\geckolib-forge-1.19\3.1.19_mapped_official_1.19\geckolib-forge-1.19-3.1.19_mapped_official_1.19.jar
+MCP:    C:\Users\samue\.gradle\caches\forge_gradle\mcp_repo\net\minecraft\mapping\1.19\mapping-1.19-mapping.zip
+Loading MCP Data
+Processing ZIP file
+Stripped Manifest of sha digests
+Process complete

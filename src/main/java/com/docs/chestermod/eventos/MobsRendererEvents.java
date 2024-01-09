@@ -1,7 +1,6 @@
 package com.docs.chestermod.eventos;
 
 import com.docs.chestermod.Chestermod;
-import com.docs.chestermod.client.models.ChesterModel;
 import com.docs.chestermod.client.renderer.ChesterRenderer;
 import com.docs.chestermod.init.ModsInit;
 
@@ -17,8 +16,4 @@ public class MobsRendererEvents {
     event.registerEntityRenderer(ModsInit.CHESTER.get(), ChesterRenderer::new);
   }
 
-  @SubscribeEvent
-  public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-    event.registerLayerDefinition(ChesterModel.LAYER_LOCATION, ChesterModel::createBodyLayer);
-  }
 }

@@ -1,25 +1,29 @@
 package com.docs.chestermod.client.renderer;
 
-import com.docs.chestermod.Chestermod;
-import com.docs.chestermod.client.models.ChesterModel;
 import com.docs.chestermod.entities.ChesterEntity;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import org.jetbrains.annotations.Nullable;
+
+import com.docs.chestermod.Chestermod;
+import com.docs.chestermod.client.models.*;
+
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class ChesterRenderer extends MobRenderer<ChesterEntity, ChesterModel> {
+public class ChesterRenderer extends GeoEntityRenderer<ChesterEntity> {
 
-  private static final ResourceLocation TEXTURE = new ResourceLocation(Chestermod.MODID,
-      "textures/entities/chester.png");
+    public ChesterRenderer(EntityRendererProvider.Context context) {
+        super(context, new ChesterModel());
+    }
 
-  public ChesterRenderer(EntityRendererProvider.Context context) {
-    super(context, new ChesterModel(context.bakeLayer(ChesterModel.LAYER_LOCATION)), 0.25f);
-  }
-
-  @Override
-  public ResourceLocation getTextureLocation(ChesterEntity p_114482_) {
-    return TEXTURE;
-  }
+    @Override
+    public ResourceLocation getTextureLocation(ChesterEntity instance) {
+        return new ResourceLocation(Chestermod.MODID, "textures/entity/chester_texture.png");
+    }
 
 }

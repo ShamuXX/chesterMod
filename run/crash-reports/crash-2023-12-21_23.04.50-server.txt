@@ -1,0 +1,147 @@
+---- Minecraft Crash Report ----
+// This doesn't make any sense!
+
+Time: 21/12/23 23:04
+Description: Ticking entity
+
+java.lang.NullPointerException: Cannot invoke "java.util.UUID.equals(Object)" because "p_46004_" is null
+	at net.minecraft.world.level.EntityGetter.getPlayerByUUID(EntityGetter.java:186) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading}
+	at com.docs.chestermod.entities.ChesterEntity.swimInWater(ChesterEntity.java:92) ~[%23191!/:?] {re:classloading}
+	at com.docs.chestermod.entities.ChesterEntity.tick(ChesterEntity.java:88) ~[%23191!/:?] {re:classloading}
+	at net.minecraft.server.level.ServerLevel.tickNonPassenger(ServerLevel.java:657) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.world.level.Level.guardEntityTick(Level.java:457) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.level.ServerLevel.lambda$tick$3(ServerLevel.java:322) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.world.level.entity.EntityTickList.forEach(EntityTickList.java:53) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading}
+	at net.minecraft.server.level.ServerLevel.tick(ServerLevel.java:302) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:866) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:806) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:84) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:654) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:245) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:842) [?:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Stacktrace:
+	at net.minecraft.world.level.EntityGetter.getPlayerByUUID(EntityGetter.java:186) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading}
+	at com.docs.chestermod.entities.ChesterEntity.swimInWater(ChesterEntity.java:92) ~[%23191!/:?] {re:classloading}
+	at com.docs.chestermod.entities.ChesterEntity.tick(ChesterEntity.java:88) ~[%23191!/:?] {re:classloading}
+	at net.minecraft.server.level.ServerLevel.tickNonPassenger(ServerLevel.java:657) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.world.level.Level.guardEntityTick(Level.java:457) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.level.ServerLevel.lambda$tick$3(ServerLevel.java:322) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.world.level.entity.EntityTickList.forEach(EntityTickList.java:53) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading}
+	at net.minecraft.server.level.ServerLevel.tick(ServerLevel.java:302) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+-- Entity being ticked --
+Details:
+	Entity Type: chestermod:chester (com.docs.chestermod.entities.ChesterEntity)
+	Entity ID: 5
+	Entity Name: entity.chestermod.chester
+	Entity's Exact location: 41.68, 85.00, -14.33
+	Entity's Block location: World: (41,85,-15), Section: (at 9,5,1 in 2,5,-1; chunk contains blocks 32,-64,-16 to 47,319,-1), Region: (0,-1; contains chunks 0,-32 to 31,-1, blocks 0,-64,-512 to 511,319,-1)
+	Entity's Momentum: 0.00, -2.45, 0.00
+	Entity's Passengers: []
+	Entity's Vehicle: null
+Stacktrace:
+	at net.minecraft.world.level.Level.guardEntityTick(Level.java:457) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.level.ServerLevel.lambda$tick$3(ServerLevel.java:322) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.world.level.entity.EntityTickList.forEach(EntityTickList.java:53) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading}
+	at net.minecraft.server.level.ServerLevel.tick(ServerLevel.java:302) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:866) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:806) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:84) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:654) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:245) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:842) [?:?] {}
+
+
+-- Affected level --
+Details:
+	All players: 1 total; [ServerPlayer['Dev'/96, l='ServerLevel[Chester Prueba]', x=396.33, y=63.00, z=-52.27]]
+	Chunk stats: 2689
+	Level dimension: minecraft:overworld
+	Level spawn location: World: (0,98,0), Section: (at 0,2,0 in 0,6,0; chunk contains blocks 0,-64,0 to 15,319,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,-64,0 to 511,319,511)
+	Level time: 325841 game time, 286179 day time
+	Level name: Chester Prueba
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: true
+	Level weather: Rain time: 14324 (now: false), thunder time: 119338 (now: false)
+	Known server brands: forge
+	Level was modded: true
+	Level storage version: 0x04ABD - Anvil
+Stacktrace:
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:866) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:806) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:84) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:654) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:245) ~[forge-1.19-41.1.0_mapped_official_1.19-recomp.jar%23186!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:842) [?:?] {}
+
+
+-- System Details --
+Details:
+	Minecraft Version: 1.19
+	Minecraft Version ID: 1.19
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 17.0.9, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode, sharing), Oracle Corporation
+	Memory: 866058400 bytes (825 MiB) / 2334130176 bytes (2226 MiB) up to 4282384384 bytes (4084 MiB)
+	CPUs: 8
+	Processor Vendor: AuthenticAMD
+	Processor Name: AMD Ryzen 5 3400G with Radeon Vega Graphics    
+	Identifier: AuthenticAMD Family 23 Model 24 Stepping 1
+	Microarchitecture: Zen / Zen+
+	Frequency (GHz): 3.69
+	Number of physical packages: 1
+	Number of physical CPUs: 4
+	Number of logical CPUs: 8
+	Graphics card #0 name: NVIDIA GeForce GTX 1060 6GB
+	Graphics card #0 vendor: NVIDIA (0x10de)
+	Graphics card #0 VRAM (MB): 4095.00
+	Graphics card #0 deviceId: 0x1c03
+	Graphics card #0 versionInfo: DriverVersion=31.0.15.4617
+	Memory slot #0 capacity (MB): 8192.00
+	Memory slot #0 clockSpeed (GHz): 2.13
+	Memory slot #0 type: DDR4
+	Memory slot #1 capacity (MB): 8192.00
+	Memory slot #1 clockSpeed (GHz): 2.13
+	Memory slot #1 type: DDR4
+	Virtual memory max (MB): 24119.72
+	Virtual memory used (MB): 18290.11
+	Swap memory total (MB): 7787.39
+	Swap memory used (MB): 545.29
+	JVM Flags: 1 total; -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump
+	Server Running: true
+	Player Count: 1 / 8; [ServerPlayer['Dev'/96, l='ServerLevel[Chester Prueba]', x=396.33, y=63.00, z=-52.27]]
+	Data Packs: vanilla, mod:forge, mod:chestermod
+	World Generation: Stable
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'forge'; Server brand changed to 'forge'
+	Launched Version: MOD_DEV
+	ModLauncher: 10.0.9+10.0.9+main.dcd20f30
+	ModLauncher launch target: forgeclientuserdev
+	ModLauncher naming: mcp
+	ModLauncher services: 
+		mixin-0.8.5.jar mixin PLUGINSERVICE 
+		eventbus-6.0.0.jar eventbus PLUGINSERVICE 
+		fmlloader-1.19-41.1.0.jar slf4jfixer PLUGINSERVICE 
+		fmlloader-1.19-41.1.0.jar object_holder_definalize PLUGINSERVICE 
+		fmlloader-1.19-41.1.0.jar runtime_enum_extender PLUGINSERVICE 
+		fmlloader-1.19-41.1.0.jar capability_token_subclass PLUGINSERVICE 
+		accesstransformers-8.0.4.jar accesstransformer PLUGINSERVICE 
+		fmlloader-1.19-41.1.0.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-10.0.9.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-10.0.9.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		minecraft@1.0
+		lowcodefml@null
+		javafml@null
+	Mod List: 
+		forge-1.19-41.1.0_mapped_official_1.19-recomp.jar |Minecraft                     |minecraft                     |1.19                |DONE      |Manifest: a1:d4:5e:04:4f:d3:d6:e0:7b:37:97:cf:77:b0:de:ad:4a:47:ce:8c:96:49:5f:0a:cf:8c:ae:b2:6d:4b:8a:3f
+		                                                  |Forge                         |forge                         |41.1.0              |DONE      |Manifest: NOSIGNATURE
+		main                                              |Chester Mod                   |chestermod                    |1.0                 |DONE      |Manifest: NOSIGNATURE
+	Crash Report UUID: 604792d6-3d49-4dd3-9c54-b01b55a2c4c4
+	FML: 41.1
+	Forge: net.minecraftforge:41.1.0

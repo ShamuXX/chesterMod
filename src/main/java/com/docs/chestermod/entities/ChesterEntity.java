@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,6 +19,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.JumpControl;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -33,14 +35,16 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-
-import java.util.UUID;;
+import java.util.UUID;
 
 public class ChesterEntity extends AbstractChestedHorse {
   private static final EntityDataAccessor<Boolean> DATA_ID_CHEST = SynchedEntityData
       .defineId(ChesterEntity.class, EntityDataSerializers.BOOLEAN);
   public static final int INV_CHEST_COUNT = 15;
   private static final double TELEPORT_DISTANCE = 16.0;
+  public static final float ORIGINAL_SPEED = 1f;
+  private static final int MAX_JUMP_COOLDOWN = 14;
+  private int jumpCooldown = 0;
 
   private boolean tamed = false;
 
@@ -74,6 +78,7 @@ public class ChesterEntity extends AbstractChestedHorse {
     super.tick();
 
     followOwner();
+    swimInWater();
 
     UUID ownerUUID = this.getOwnerUUID();
     if (this.isTamed() && ownerUUID != null) {
@@ -84,6 +89,29 @@ public class ChesterEntity extends AbstractChestedHorse {
           teleportToOwner();
         }
       }
+    }
+  }
+
+  private void swimInWater() {
+    UUID ownerUUID = this.getOwnerUUID();
+    Player owner = ownerUUID != null ? this.level.getPlayerByUUID(ownerUUID) : null;
+
+    if (owner != null && owner.isInWater()) {
+      double waterSurfaceY = owner.getY() + 0.5;
+
+      double minY = waterSurfaceY - 1.0;
+      if (this.getY() < minY) {
+        this.teleportTo(this.getX(), minY, this.getZ());
+      }
+
+      this.getNavigation().setCanFloat(true);
+      this.setSpeed(1.0f);
+
+      this.getNavigation().moveTo(owner.getX(), waterSurfaceY, owner.getZ(), 2.0);
+
+    } else {
+      this.getNavigation().setCanFloat(false);
+      this.setSpeed(ORIGINAL_SPEED);
     }
   }
 
@@ -98,7 +126,9 @@ public class ChesterEntity extends AbstractChestedHorse {
         Player owner = (Player) ownerEntity;
         if (owner != null) {
           Vec3 ownerPos = owner.position();
-          this.teleportTo(ownerPos.x(), ownerPos.y(), ownerPos.z());
+          if (owner.isOnGround()) {
+            this.teleportTo(ownerPos.x(), ownerPos.y(), ownerPos.z());
+          }
         }
       }
     }
@@ -109,13 +139,50 @@ public class ChesterEntity extends AbstractChestedHorse {
 
     if (ownerUUID != null) {
       double followSpeed = 1.0;
+      double stopDistance = 2.0;
       PathNavigation navigation = this.getNavigation();
       LivingEntity owner = this.level.getPlayerByUUID(ownerUUID);
 
       if (owner != null) {
-        navigation.moveTo(owner, followSpeed);
+        double distance = this.distanceTo(owner);
+
+        if (distance > stopDistance) {
+          navigation.moveTo(owner, followSpeed);
+          jump();
+        } else {
+          navigation.stop();
+        }
       }
     }
+  }
+
+  private void jump() {
+    if (this.isOnGround() && jumpCooldown <= 0) {
+      JumpControl jumpControl = (JumpControl) this.getJumpControl();
+      if (jumpControl != null) {
+        jumpControl.jump();
+        jumpCooldown = MAX_JUMP_COOLDOWN;
+      } else {
+        if (this.canJump) {
+          this.setDeltaMovement(this.getDeltaMovement().add(0, 1.5, 0));
+          this.canJump = false;
+        }
+      }
+    }
+
+    if (jumpCooldown > 0) {
+      jumpCooldown--;
+    }
+  }
+
+  @Override
+  public boolean hurt(DamageSource damageSource, float p_29659_) {
+    if (damageSource == DamageSource.FALLING_BLOCK) {
+      return super.hurt(damageSource, 0);
+    } else if (damageSource == DamageSource.DROWN) {
+      return super.hurt(damageSource, 0);
+    }
+    return super.hurt(damageSource, 3);
   }
 
   public boolean feedApple(Player player) {
@@ -136,7 +203,6 @@ public class ChesterEntity extends AbstractChestedHorse {
   public void onAddedToWorld() {
     super.onAddedToWorld();
 
-    // Restablecer la tarea de seguimiento al entrar al mundo
     this.goalSelector.addGoal(0, new Goal() {
       @Override
       public boolean canUse() {
@@ -146,12 +212,22 @@ public class ChesterEntity extends AbstractChestedHorse {
     });
   }
 
+  private boolean canJump;
+
+  @Override
+  public boolean canJump() {
+    return super.canJump();
+  }
+
+  public void setCanJump(boolean canJump) {
+    this.canJump = canJump;
+  }
+
   public void setChest(boolean p_30505_) {
     this.entityData.set(DATA_ID_CHEST, p_30505_);
   }
 
   protected int getInventorySize() {
-    System.err.println(super.getInventorySize());
     return this.hasChest() ? 17 : super.getInventorySize();
   }
 
@@ -160,12 +236,15 @@ public class ChesterEntity extends AbstractChestedHorse {
   }
 
   public boolean isTamed() {
-    System.err.println(tamed);
     return tamed;
   }
 
   public void setTamed(boolean tamed) {
     this.tamed = tamed;
+  }
+
+  public boolean canBreatheUnderwater() {
+    return true;
   }
 
   public void addAdditionalSaveData(CompoundTag compound) {
@@ -242,10 +321,10 @@ public class ChesterEntity extends AbstractChestedHorse {
   protected void registerGoals() {
     this.goalSelector.addGoal(0, new FloatGoal(this));
     this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-    this.goalSelector.addGoal(3, new BreedGoal(this, 1.0D));
-    this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-    this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
-    this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+    this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
+    this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+    this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
+    this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
   }
 
   @Override
@@ -260,12 +339,11 @@ public class ChesterEntity extends AbstractChestedHorse {
           customTamingParticles();
           return InteractionResult.SUCCESS;
         }
-        // Si el jugador utiliza una manzana, alimenta al mob
       } else {
         this.openCustomInventoryScreen(player);
       }
     } else if (this.hasChest() && this.isTamed()) {
-      this.openCustomInventoryScreen(player); // open interface to access inventory
+      this.openCustomInventoryScreen(player);
     } else {
       return InteractionResult.SUCCESS;
     }
